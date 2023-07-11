@@ -1,7 +1,7 @@
 # Windows Instalation
 ## Create Project Folder 
 Model Folder:
->%UserProfile%\Desota_Models\NeuralQA
+> %UserProfile%\Desota_Models\NeuralQA
 
 Go to CMD (command prompt)
 > WIN + "R" 
@@ -36,21 +36,77 @@ Copy-Paste the following comands
 ```
 %UserProfile%\miniconda3\condabin\activate 
 conda deactivate 
-conda create --prefix ./env -y
+conda create --prefix ./env python=3.11 -y
 conda activate ./env 
 conda install -y pip 
-pip install git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
+pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
 echo DONE (:
 
 ```
 
-## Initialize Neuralqa model
+
+
+
+# Linux Instalation
+## Create Project Folder 
+Model Folder:
+> ~\Desota_Models\NeuralQA
+
+Go to CMD (command prompt)
+> CTRL + ALT + "T" 
+
 Copy-Paste the following comands 
+```
+mkdir ~\Desota_Models\NeuralQA
+cd ~\Desota_Models\NeuralQA
+```
+
+## Test if conda is instaled
+
+Copy-Paste the following comands 
+```
+conda --help
+```
+if response is:
+> 'conda' is not recognized as an internal or external command,operable program or batch 
+
+then is required conda instalation !
+
+### Conda Instalation
+Update/Upgrade System
+```
+sudo apt update && sudo apt upgrade
+```
+
+Copy-Paste the following comand
+```
+pip install -q -r -U pip && pip install conda
+```
+
+
+## Install Neuralqa model
+Copy-Paste the following comands 
+```
+conda create --prefix ./env python=3.11 -y
+conda activate ./env 
+conda install -y pip 
+pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
+echo DONE (:
+
+```
+
+
+
+# Initialize Neuralqa model - Equal for Windows & Linux
+Copy-Paste the following comand
 ```
 neuralqa ui --port 8888
 ```
-### Credits / Lincense
-#### Citation
+
+
+
+# Credits / Lincense
+## Citation
 ```
 @article{dibia2020neuralqa,
     title={NeuralQA: A Usable Library for Question Answering (Contextual Query Expansion + BERT) on Large Datasets},
@@ -60,5 +116,5 @@ neuralqa ui --port 8888
 }
 ```
 
-#### Licence
+## Licence
 [MIT](https://github.com/victordibia/neuralqa/blob/master/LICENSE)
