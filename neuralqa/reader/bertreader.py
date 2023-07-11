@@ -10,18 +10,21 @@ logger = logging.getLogger(__name__)
 
 
 class BERTReader(Reader):
-    def __init__(self, model_name, model_path, model_type="bert", **kwargs):
+    def __init__(self, model_name, model_path, model_type="distilbert", **kwargs):
         Reader.__init__(self, model_name, model_path, model_type)
         # self.load_model(model_name, model_path, model_type)
 
     def get_best_start_end_position(self, start_scores, end_scores):
-        answer_start = tf.argmax(start_scores, axis=1).numpy()[0]
-        answer_end = (tf.argmax(end_scores, axis=1) + 1).numpy()[0]
+        answer_start = tf.math.argmax(start_scores, axis=1).numpy()[0]      # Vargas - DESOTA -> neuralqa was using deprecated tf.argmax function ...
+        answer_end = (tf.math.argmax(end_scores, axis=1) + 1).numpy()[0]
         return answer_start, answer_end
 
     def get_chunk_answer_span(self, inputs):
         start_time = time.time()
-        answer_start_scores, answer_end_scores = self.model(inputs)
+        # Vargas - DESOTA
+        # answer_start_scores, answer_end_scores = self.model(inputs)       # neuralqa Original atribution -> return (start_logits, end_logits) as strings ??
+        model_inputs = self.model(inputs)
+        answer_start_scores, answer_end_scores = model_inputs['start_logits'], model_inputs['end_logits']
 
         answer_start, answer_end = self.get_best_start_end_position(
             answer_start_scores, answer_end_scores)
@@ -106,8 +109,17 @@ class BERTReader(Reader):
             question, context, max_chunk_size, stride)
         answer_holder = []
         for chunk in chunked_tokens:
-            model_input = {"input_ids": chunk["token_ids"], "attention_mask":
-                           chunk["attention_mask"], "token_type_ids": chunk["token_type_ids"]}
+            if self.type == 'distilbert':               # Vargas - DESOTA -> condition added (:
+                model_input = {
+                    "input_ids": chunk["token_ids"], 
+                    "attention_mask": chunk["attention_mask"]
+                }
+            else:
+                model_input = {
+                    "input_ids": chunk["token_ids"], 
+                    "attention_mask": chunk["attention_mask"], 
+                    "token_type_ids": chunk["token_type_ids"]
+                }
             answer = self.get_chunk_answer_span(model_input)
             if len(answer["answer"]) > 2:
                 answer["question"] = question
