@@ -12,7 +12,10 @@ class ReaderPool():
         for model in models["options"]:
             if (model["type"] == "bert" or model["type"] == "distilbert"):
                 self.reader_pool[model["value"]] = BERTReader(
-                    model["name"], model["value"])
+                    model["name"], 
+                    model["value"],
+                    model["type"]       # Vargas - DESOTA -> added (:
+                )
 
     @property
     def model(self):
