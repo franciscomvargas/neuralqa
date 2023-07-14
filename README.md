@@ -14,7 +14,6 @@ cd %UserProfile%\Desota_Models\NeuralQA
 ```
 
 ## Test if conda is instaled
-
 Copy-Paste the following comands 
 ```
 conda --help
@@ -42,6 +41,25 @@ conda install -y pip
 pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
 echo DONE (:
 
+```
+
+## Run Model
+### Start API server
+> Re-Open the command prompt (CMD)
+
+Copy-Paste the following comands
+```
+cd %UserProfile%\Desota_Models\NeuralQA
+%UserProfile%\miniconda3\condabin\activate 
+conda deactivate 
+conda activate ./env 
+neuralqa ui --port 8888
+
+```
+### Open Server in Browser
+Search in the browser
+```
+http://127.0.0.1:8888/
 ```
 
 
@@ -80,14 +98,14 @@ sudo apt update && sudo apt upgrade
 
 Copy-Paste the following comand
 ```
-pip install -q -r -U pip && pip install conda
+pip install -q -r -U pip && pip install -q -r conda
 ```
 
 
 ## Install Neuralqa model
 Copy-Paste the following comands 
 ```
-conda create --prefix ./env python=3.11 -y
+conda create --prefix ./env -y
 conda activate ./env 
 conda install -y pip 
 pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
@@ -95,14 +113,22 @@ echo DONE (:
 
 ```
 
+## Run Model
+### Start API server
+> Re-Open the command prompt (CMD)
 
-
-# Initialize Neuralqa model - Equal for Windows & Linux
-Copy-Paste the following comand
+Copy-Paste the following comands
 ```
+cd ~\Desota_Models\NeuralQA
+conda activate ./env 
 neuralqa ui --port 8888
-```
 
+```
+### Open Server in Browser
+Search in the browser
+```
+http://127.0.0.1:8888/
+```
 
 
 # Credits / Lincense
