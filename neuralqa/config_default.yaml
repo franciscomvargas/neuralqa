@@ -120,14 +120,11 @@ reader:
 
 expander:
   title: Expander
-  selected: "none"
+  selected: bert-base-uncased
   options:
-    - name: "None"
-      value: "none"
-      type: "none"
-    # - name: BERT MaskedLM
-    #   type: maskedlm
-    #   value: bert-base-uncased
+    - name: BERT MaskedLM
+      type: maskedlm
+      value: bert-base-uncased
 
 # optional selection of samples to show in the UI
 samples:
