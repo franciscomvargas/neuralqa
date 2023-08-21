@@ -3,18 +3,19 @@
 set model_git=https://github.com/franciscomvargas/neuralqa.git
 set model_git_branch=master
 @REM - Model Path
-set model_path_install=%UserProfile%\Desota\Desota_Models\NeuralQA
-set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa
+set install_model_path=%UserProfile%\Desota\Desota_Models\NeuralQA
+set model_path_in=%install_model_path%\neuralqa
 @REM - Service Name
 set model_service_name=neuralqa_service
 @REM - Model Execs
-set model_uninstall=%model_path%\executables\Windows\neuralqa.uninstall.bat
-set model_service_install=%model_path%\executables\Windows\neuralqa.nssm.bat
-set model_start=%model_path%\executables\Windows\neuralqa.start.bat
+set model_uninstall=%model_path_in%\executables\Windows\neuralqa.uninstall.bat
+set model_service_install=%model_path_in%\executables\Windows\neuralqa.nssm.bat
+set model_start=%model_path_in%\executables\Windows\neuralqa.start.bat
 
+echo %model_path_in%
+PAUSE
 
-
-@REM -- Edit bellow if you're felling lucky ;) --
+@REM -- Edit bellow if you're felling lucky ;) -- https://youtu.be/5NV6Rdv1a3I
 
 @REM - Program Installers
 set python64=https://www.python.org/ftp/python/3.11.4/python-3.11.4-amd64.exe
@@ -29,7 +30,7 @@ SET arg1=/reinstall
 SET arg2=/startmodel
 
 @REM Re-instalation Check
-IF NOT EXIST %model_path% GOTO endofreinstall
+IF NOT EXIST %model_path_in% GOTO endofreinstall
 IF "%1" EQU "" GOTO noreinstallargs
 IF %1 EQU %arg1% (
     GOTO reinstall
@@ -43,11 +44,11 @@ GOTO endofreinstall
 :reinstall
 call %model_uninstall% /Q
 :endofreinstall
-IF EXIST %model_path% echo Re-Instalation Required && GOTO EOF_IN
+IF EXIST %model_path_in% echo Re-Instalation Required && GOTO EOF_IN
 
 @REM Create Project Folder
-mkdir %model_path_install%
-call cd %model_path_install%
+mkdir %install_model_path%
+call cd %install_model_path%
 
 
 @REM Install Python if Required
@@ -88,7 +89,6 @@ call %UserProfile%\Desota\Portables\PortableGit\bin\git.exe clone --branch %mode
 
 
 @REM Install Conda if Required
-call cd %model_path%
 call mkdir %UserProfile%\Desota\Portables
 IF NOT EXIST %UserProfile%\Desota\Portables\miniconda3\condabin\conda.bat goto installminiconda
 goto skipinstallminiconda
@@ -99,6 +99,9 @@ IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %mi
 
 
 @REM Create/Activate Conda Virtual Environment
+call cd %model_path_in%
+echo %cd%
+PAUSE 
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda create --prefix ./env python=3.11 -y
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda activate ./env
 
