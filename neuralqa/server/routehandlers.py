@@ -4,7 +4,7 @@ from utils import ConfigParser
 import time
 from fastapi import APIRouter
 from typing import Optional
-from routemodels import Document, Answer, Explanation, Expansion
+from .routemodels import Document, Answer, Explanation, Expansion
 import logging
 
 logger = logging.getLogger(__name__)

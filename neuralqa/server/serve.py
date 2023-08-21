@@ -1,7 +1,7 @@
 
 
 from reader import BERTReader, ReaderPool
-from routehandlers import Handler
+from .routehandlers import Handler
 from retriever import ElasticSearchRetriever, RetrieverPool
 from utils import ConfigParser
 from expander import ExpanderPool
