@@ -1,5 +1,5 @@
-from neuralqa.retriever import Retriever
-from neuralqa.utils import parse_field_content
+from retriever import Retriever
+from utils import parse_field_content
 from elasticsearch import Elasticsearch, ConnectionError, NotFoundError
 import logging
 

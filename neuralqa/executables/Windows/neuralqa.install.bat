@@ -3,7 +3,7 @@
 set model_git=https://github.com/franciscomvargas/neuralqa.git
 set model_git_branch=master
 @REM - Model Path
-set model_path_install=%UserProfile%\Desota\Desota_Models\NeuralQA\
+set model_path_install=%UserProfile%\Desota\Desota_Models\NeuralQA
 set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa
 @REM - Service Name
 set model_service_name=neuralqa_service
@@ -98,7 +98,7 @@ call %UserProfile%\miniconda3\condabin\conda create --prefix ./env python=3.11 -
 call %UserProfile%\miniconda3\condabin\conda activate ./env
 
 @REM Install required Libraries
-call pip install -r requirements.txt
+call pip install -r ..\requirements.txt
 
 
 @REM Install Service - NSSM  - the Non-Sucking Service Manager

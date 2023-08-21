@@ -1,5 +1,5 @@
 
-from neuralqa.reader import BERTReader
+from reader import BERTReader
 import logging
 
 logger = logging.getLogger(__name__)

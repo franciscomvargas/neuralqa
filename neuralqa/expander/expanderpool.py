@@ -1,5 +1,5 @@
 
-from neuralqa.expander import MLMExpander
+from expander import MLMExpander
 import logging
 
 logger = logging.getLogger(__name__)

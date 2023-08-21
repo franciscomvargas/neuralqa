@@ -1,4 +1,4 @@
-from neuralqa.reader import Reader
+from reader import Reader
 
 
 import tensorflow as tf

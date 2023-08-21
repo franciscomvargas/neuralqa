@@ -1,7 +1,7 @@
 import logging
-from neuralqa.version import VERSION as __version__
-from neuralqa.reader import BERTReader
-from neuralqa.utils import import_sample_data
+from version import VERSION as __version__
+from reader import BERTReader
+from utils import import_sample_data
 
 
 logging.getLogger("transformers").setLevel(logging.ERROR)

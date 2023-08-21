@@ -1,9 +1,9 @@
 import click
-from neuralqa.server import launch_server
-from neuralqa.utils import cli_args
-from neuralqa.utils import import_sample_data, ConfigParser
+from server import launch_server
+from utils import cli_args
+from utils import import_sample_data, ConfigParser
 import os
-from neuralqa.retriever import RetrieverPool
+from retriever import RetrieverPool
 import logging
 
 

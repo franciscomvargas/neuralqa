@@ -1,4 +1,4 @@
-from neuralqa.expander import Expander
+from expander import Expander
 import logging
 from transformers import AutoTokenizer, TFBertForMaskedLM
 import tensorflow as tf

@@ -1,10 +1,10 @@
 
 
-from neuralqa.reader import BERTReader, ReaderPool
-from neuralqa.server.routehandlers import Handler
-from neuralqa.retriever import ElasticSearchRetriever, RetrieverPool
-from neuralqa.utils import ConfigParser
-from neuralqa.expander import ExpanderPool
+from reader import BERTReader, ReaderPool
+from routehandlers import Handler
+from retriever import ElasticSearchRetriever, RetrieverPool
+from utils import ConfigParser
+from expander import ExpanderPool
 
 import os
 import logging

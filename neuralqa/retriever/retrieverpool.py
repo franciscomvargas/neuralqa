@@ -1,5 +1,5 @@
 
-from neuralqa.retriever import ElasticSearchRetriever
+from retriever import ElasticSearchRetriever
 import logging
 
 logger = logging.getLogger(__name__)
