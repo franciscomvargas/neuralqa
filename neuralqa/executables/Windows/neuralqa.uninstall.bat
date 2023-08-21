@@ -1,6 +1,6 @@
 @REM Uninstalation VARS
 @REM - Model Path
-set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa
+set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA
 set service_name=neuralqa_service
 set nssm_path=%UserProfile%\Desota\Portables\nssm
 
