@@ -19,6 +19,10 @@ class Handler:
         self.retriever_pool = retriever_pool
         self.expander_pool = expander_pool
 
+        @router.get("/handshake")
+        async def get_handshake():
+            return{"status":"ready"}
+
         @router.post("/answers")
         async def get_answers(params: Answer):
 
