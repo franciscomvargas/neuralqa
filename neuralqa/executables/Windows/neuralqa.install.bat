@@ -12,8 +12,7 @@ set model_uninstall=%model_path_in%\executables\Windows\neuralqa.uninstall.bat
 set model_service_install=%model_path_in%\executables\Windows\neuralqa.nssm.bat
 set model_start=%model_path_in%\executables\Windows\neuralqa.start.bat
 
-echo %model_path_in%
-PAUSE
+
 
 @REM -- Edit bellow if you're felling lucky ;) -- https://youtu.be/5NV6Rdv1a3I
 
@@ -100,8 +99,6 @@ IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %mi
 
 @REM Create/Activate Conda Virtual Environment
 call cd %model_path_in%
-echo %cd%
-PAUSE 
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda create --prefix ./env python=3.11 -y
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda activate ./env
 
