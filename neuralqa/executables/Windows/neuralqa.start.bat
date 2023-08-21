@@ -1,7 +1,7 @@
 @REM Service VARS
 set service_name=neuralqa_service
 @REM Service waiter - Confirm Service is ready for requests
-set service_waiter=curl localhost:8880/api/handshake
+set service_waiter=curl localhost:8888/api/handshake
 set shake_respose={"status":"ready"}
 
 
