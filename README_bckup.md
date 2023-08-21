@@ -35,8 +35,7 @@ Copy-Paste the following comands
 ```
 cd %UserProfile%\Desota\Desota_Models\NeuralQA
 %UserProfile%\miniconda3\condabin\conda create --prefix ./env python=3.11 -y
-conda activate ./env 
-conda install -y pip 
+%UserProfile%\miniconda3\condabin\conda activate ./env 
 pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
 echo DONE (:
 

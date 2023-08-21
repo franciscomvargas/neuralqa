@@ -67,7 +67,7 @@ IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %py
 @REM GIT MODEL CLONE
 git --version 3>NUL
 IF NOT errorlevel 1 (
-    @REM  Clone Descraper Repository
+    @REM  Clone NeuralQA Repository
     call git clone --branch %model_git_branch% %model_git% .
     GOTO endgitclonemodel
 )

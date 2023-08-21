@@ -4,7 +4,7 @@ set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa
 @REM retrieved from https://nssm.cc/usage
 set model_name=Desota/NeuralQA
 set service_name=neuralqa_service
-set model_exe=%model_path%\executables\Windows\descraper.service.bat
+set model_exe=%model_path%\executables\Windows\neuralqa.service.bat
 set exe_path=%model_path%\executables\Windows
 set model_exe_args=
 set model_desc=
