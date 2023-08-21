@@ -1,135 +1,103 @@
-# Windows Instalation
-## Create Project Folder 
-Model Folder:
-> %UserProfile%\Desota_Models\NeuralQA
+# Instalation
+<details>
+    <summary><h2>Windows</h2></summary>
 
-Go to CMD (command prompt)
-> WIN + "R" 
-> Write "cmd" 
+* Go to CMD as Administrator (command prompt):
+    * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
+    * Search: `cmd` 
+    * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
-Copy-Paste the following comands 
-```
-mkdir %UserProfile%\Desota_Models\NeuralQA
-cd %UserProfile%\Desota_Models\NeuralQA
-```
+* Copy-Paste the following comands: 
+    ```cmd
+    powershell -command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/franciscomvargas/neuralqa/master/neuralqa/executables/Windows/neuralqa.install.bat -OutFile ~\neuralqa_installer.bat"
+    %UserProfile%\neuralqa_installer.bat && del %UserProfile%\neuralqa_installer.bat
 
-## Test if conda is instaled
-Copy-Paste the following comands 
-```
-conda --help
-```
-if response is:
-> 'conda' is not recognized as an internal or external command,operable program or batch 
+    ```
+    * Installer Optional `Arguments`
 
-then is required conda instalation !
+        <table>
+            <thead>
+                <tr>
+                    <th>arg</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan=3>/reinstall</td>
+                    <td>Overwrite project when re-installing</td>
+                </tr>
+                <tr>
+                    <td>Delete project service when re-installing</td>
+                </tr>
+                <tr>
+                    <td>Install without requiring user interaction</td>
+                </tr>
+                <tr>
+                    <td>/startmodel</td>
+                    <td>Start project service on instalation</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        ```cmd
+        powershell -command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/franciscomvargas/neuralqa/master/neuralqa/executables/Windows/neuralqa.install.bat -OutFile ~\neuralqa_installer.bat"
+        %UserProfile%\neuralqa_installer.bat /reinstall /startmodel && del %UserProfile%\neuralqa_installer.bat
 
-### Conda Instalation
-Copy-Paste the following comand
-```
-powershell -command "Invoke-WebRequest -Uri https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe -OutFile ~\miniconda.exe && start /B /WAIT %UserProfile%\miniconda.exe /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=%UserProfile%\miniconda3 && del %UserProfile%\miniconda.exe 
-```
+        ```
+    
+    
+</details>
 
+# Service Operations
+<details>
+    <summary><h2>Windows</h2></summary>
 
-## Install Neuralqa model
-Copy-Paste the following comands 
-```
-%UserProfile%\miniconda3\condabin\activate 
-conda deactivate 
-conda create --prefix ./env python=3.11 -y
-conda activate ./env 
-conda install -y pip 
-pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
-echo DONE (:
+* Go to CMD (command prompt):
+  * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
+  * Search: `cmd` 
+  * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
-```
+### Start Service
+* Copy-Paste the following comands: 
+    ```cmd
+    %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.start.bat
 
-## Run Model
-### Start API server
-> Re-Open the command prompt (CMD)
+    ```
+### Stop Service
+* Copy-Paste the following comands: 
+    ```cmd
+    %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.stop.bat
 
-Copy-Paste the following comands
-```
-cd %UserProfile%\Desota_Models\NeuralQA
-%UserProfile%\miniconda3\condabin\activate 
-conda deactivate 
-conda activate ./env 
-neuralqa ui --port 8888
+    ```
+</details>
 
-```
-### Open Server in Browser
-Search in the browser
-```
-http://127.0.0.1:8888/
-```
+# Uninstalation
+<details>
+    <summary><h2>Windows</h2></summary>
 
+* Go to CMD (command prompt):
+  * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
+  * Search: `cmd` 
+  * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
+* Copy-Paste the following comands: 
+    ```cmd
+    %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat
 
+    ```
+    * Uninstaller Optional `Arguments`
 
-# Linux Instalation
-## Create Project Folder 
-Model Folder:
-> ~\Desota_Models\NeuralQA
+      |arg|Description|
+      |---|---|
+      |/Q|Uninstall without requiring user interaction|
 
-Go to CMD (command prompt)
-> CTRL + ALT + "T" 
+      ```cmd
+      %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat /Q
 
-Copy-Paste the following comands 
-```
-mkdir ~\Desota_Models\NeuralQA
-cd ~\Desota_Models\NeuralQA
-```
-
-## Test if conda is instaled
-
-Copy-Paste the following comands 
-```
-conda --help
-```
-if response is:
-> 'conda' is not recognized as an internal or external command,operable program or batch 
-
-then is required conda instalation !
-
-### Conda Instalation
-Update/Upgrade System
-```
-sudo apt update && sudo apt upgrade
-```
-
-Copy-Paste the following comand
-```
-pip install -q -r -U pip && pip install -q -r conda
-```
-
-
-## Install Neuralqa model
-Copy-Paste the following comands 
-```
-conda create --prefix ./env -y
-conda activate ./env 
-conda install -y pip 
-pip install -q -r git+https://github.com/franciscomvargas/neuralqa.git@master#egg=neuralqa
-echo DONE (:
-
-```
-
-## Run Model
-### Start API server
-> Re-Open the command prompt (CMD)
-
-Copy-Paste the following comands
-```
-cd ~\Desota_Models\NeuralQA
-conda activate ./env 
-neuralqa ui --port 8888
-
-```
-### Open Server in Browser
-Search in the browser
-```
-http://127.0.0.1:8888/
-```
-
+      ```
+      
+</details>
 
 # Credits / Lincense
 ## Citation
