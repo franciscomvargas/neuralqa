@@ -56,7 +56,7 @@ ECHO %header%Welcome to DeRunner Installer!%ansi_end%
 
 :: Re-instalation Check
 ECHO %info_h1%Step 1/7 - Check Re-Instalation%ansi_end%
-IF NOT EXIST %model_path% (
+IF NOT EXIST %model_path_in% (
     ECHO %sucess%New install%ansi_end%
     GOTO noreinstallrequired
 )
@@ -83,9 +83,8 @@ IF EXIST %model_path% (
 
 :: Create Project Folder
 ECHO %info_h1%Step 2/7 - Create Project Folder%ansi_end%
-mkdir %model_path% >NUL 2>NUL
-call cd %model_path% >NUL 2>NUL
-
+mkdir %install_model_path% >NUL 2>NUL
+call cd %install_model_path% >NUL 2>NUL
 
 :: Install Python if Required
 ECHO %info_h1%Step 3/7 - Install Python if required%ansi_end%
@@ -176,4 +175,4 @@ exit
 
 :EOF_IN
 ECHO %sucess%%model_name% Installed!%ansi_end%
-exit
+PAUSE
