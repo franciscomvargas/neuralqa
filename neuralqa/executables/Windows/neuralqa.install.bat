@@ -175,4 +175,4 @@ exit
 
 :EOF_IN
 ECHO %sucess%%model_name% Installed!%ansi_end%
-PAUSE
+exit
