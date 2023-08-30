@@ -1,4 +1,21 @@
 @ECHO OFF
+
+:: GET ADMIN
+net session >NUL 2>NUL
+IF %errorLevel% NEQ 0 (
+	goto UACPrompt
+) ELSE (
+	goto gotAdmin
+)
+:UACPrompt
+ECHO Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+set params= %*
+ECHO UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+start /B /WAIT "%temp%\getadmin.vbs"
+del "%temp%\getadmin.vbs"
+exit /B
+:gotAdmin
+
 :: Service VARS
 set service_name=neuralqa_service
 :: Service waiter - Confirm Service is ready for requests
