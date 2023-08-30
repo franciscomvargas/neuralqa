@@ -142,13 +142,20 @@ IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %mi
 
 
 :: Create/Activate Conda Virtual Environment
-ECHO %info_h2%Creating MiniConda Environment...%ansi_end% 
+ECHO %info_h2%Creating MiniConda Environment...%ansi_end%
+cd %model_path_in% >NUL 2>NUL
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda create --prefix ./env python=3.11 -y >NUL 2>NUL
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda activate ./env >NUL 2>NUL
 
-:: Install required Libraries
+
+:: COMMANDS WITH MINICONDA ENV ACTIVATED
+:: - Install required Libraries
 ECHO %info_h1%Step 6/7 - Install Project Packages%ansi_end%
 call pip install -r requirements.txt >NUL 2>NUL
+
+:: MINICONDA ENV DEACTIVATE
+call %UserProfile%\Desota\Portables\miniconda3\condabin\conda deactivate
+
 
 
 :: Install Service - NSSM  - the Non-Sucking Service Manager
