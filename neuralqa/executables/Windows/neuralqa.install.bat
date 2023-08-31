@@ -52,7 +52,7 @@ set fail=%ESC%[7;31m
 set ansi_end=%ESC%[0m
 :end_ansi_colors
 
-ECHO %header%Welcome to DeRunner Installer!%ansi_end%
+ECHO %header%Welcome to %model_name% Installer!%ansi_end%
 
 :: Re-instalation Check
 ECHO %info_h1%Step 1/7 - Check Re-Instalation%ansi_end%
@@ -112,21 +112,20 @@ IF NOT errorlevel 1 (
     ECHO %info_h2%Cloning Project Repository...%ansi_end%
     call git clone --branch %model_git_branch% %model_git% . >NUL 2>NUL
     call copy %model_path%\Assets\config_template.yaml %model_path%\config.yaml >NUL 2>NUL
-    GOTO endgitclonemodel
+) ELSE (
+    :: PORTABLE GIT MODEL CLONE
+    :: Install Portable Git
+    call mkdir %UserProfile%\Desota\Portables >NUL 2>NUL
+    IF EXIST %UserProfile%\Desota\Portables\PortableGit GOTO clonerep
+    :: Install Portable Git
+    %info_h2%Downloading Portable Git...%ansi_end%
+    IF %PROCESSOR_ARCHITECTURE%==AMD64 powershell -command "Invoke-WebRequest -Uri %git64_portable% -OutFile ~\Desota\Portables\git_installer.exe" && start /B /WAIT %UserProfile%\Desota\Portables\git_installer.exe -o"%UserProfile%\Desota\Portables\PortableGit" -y && del %UserProfile%\Desota\Portables\git_installer.exe && goto clonerep
+    IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %git32_portable% -OutFile ~\Desota\Portables\git_installer.exe" && start /B /WAIT %UserProfile%\Desota\Portables\git_installer.exe -o"%UserProfile%\Desota\Portables\PortableGit" && del %UserProfile%\Desota\Portables\git_installer.exe && goto clonerep
+    :clonerep
+    ECHO %info_h2%Cloning Project Repository...%ansi_end%
+    call %UserProfile%\Desota\Portables\PortableGit\bin\git.exe clone --branch %model_git_branch% %model_git% . >NUL 2>NUL
+    call copy %model_path%\Assets\config_template.yaml %model_path%\config.yaml >NUL 2>NUL
 )
-:: PORTABLE GIT MODEL CLONE
-:: Install Portable Git
-call mkdir %UserProfile%\Desota\Portables >NUL 2>NUL
-IF EXIST %UserProfile%\Desota\Portables\PortableGit GOTO clonerep
-:: Install Portable Git
-%info_h2%Downloading Portable Git...%ansi_end%
-IF %PROCESSOR_ARCHITECTURE%==AMD64 powershell -command "Invoke-WebRequest -Uri %git64_portable% -OutFile ~\Desota\Portables\git_installer.exe" && start /B /WAIT %UserProfile%\Desota\Portables\git_installer.exe -o"%UserProfile%\Desota\Portables\PortableGit" -y && del %UserProfile%\Desota\Portables\git_installer.exe && goto clonerep
-IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %git32_portable% -OutFile ~\Desota\Portables\git_installer.exe" && start /B /WAIT %UserProfile%\Desota\Portables\git_installer.exe -o"%UserProfile%\Desota\Portables\PortableGit" && del %UserProfile%\Desota\Portables\git_installer.exe && goto clonerep
-:clonerep
-ECHO %info_h2%Cloning Project Repository...%ansi_end%
-call %UserProfile%\Desota\Portables\PortableGit\bin\git.exe clone --branch %model_git_branch% %model_git% . >NUL 2>NUL
-call copy %model_path%\Assets\config_template.yaml %model_path%\config.yaml >NUL 2>NUL
-:endgitclonemodel
 
 
 :: Install Conda if Required
@@ -143,7 +142,7 @@ IF %PROCESSOR_ARCHITECTURE%==x86 powershell -command "Invoke-WebRequest -Uri %mi
 
 :: Create/Activate Conda Virtual Environment
 ECHO %info_h2%Creating MiniConda Environment...%ansi_end%
-cd %model_path_in% >NUL 2>NUL
+call cd %model_path_in%
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda create --prefix ./env python=3.11 -y >NUL 2>NUL
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda activate ./env >NUL 2>NUL
 
@@ -151,11 +150,10 @@ call %UserProfile%\Desota\Portables\miniconda3\condabin\conda activate ./env >NU
 :: COMMANDS WITH MINICONDA ENV ACTIVATED
 :: - Install required Libraries
 ECHO %info_h1%Step 6/7 - Install Project Packages%ansi_end%
-call pip install -r requirements.txt >NUL 2>NUL
+call pip install -r %install_model_path%\requirements.txt >NUL 2>NUL
 
 :: MINICONDA ENV DEACTIVATE
 call %UserProfile%\Desota\Portables\miniconda3\condabin\conda deactivate
-
 
 
 :: Install Service - NSSM  - the Non-Sucking Service Manager
@@ -177,9 +175,13 @@ GOTO EOF_IN
 
 :startmodel
 start /B /WAIT %model_start%
-ECHO %sucess%%model_name% Installed & %model_service_name% - Started!%ansi_end%
+ECHO %sucess%Instalation Completed & Service Started!%ansi_end%
+ECHO %info_h2%model name  : %model_name%%ansi_end% 
+ECHO %info_h2%service name: %model_service_name%%ansi_end% 
 exit
 
 :EOF_IN
-ECHO %sucess%%model_name% Installed!%ansi_end%
+ECHO %sucess%%model_name% Instalation Completed!%ansi_end%
+ECHO %info_h2%model name  : %model_name%%ansi_end% 
+ECHO %info_h2%service name: %model_service_name%%ansi_end% 
 exit

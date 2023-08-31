@@ -1,4 +1,21 @@
 @ECHO OFF
+:: GET ADMIN > BEGIN
+net session >NUL 2>NUL
+IF %errorLevel% NEQ 0 (
+	goto UACPrompt
+) ELSE (
+	goto gotAdmin
+)
+:UACPrompt
+ECHO Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+set params= %*
+ECHO UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+cscript "%temp%\getadmin.vbs"
+del "%temp%\getadmin.vbs"
+exit /B
+:gotAdmin
+:: GET ADMIN > END
+
 :: Service VARS
 set service_name=neuralqa_service
 
@@ -33,6 +50,8 @@ IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%UserProfile%\Desota\Portables\n
 IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win32\nssm.exe
 
 :: Stop service - retrieved from https://nssm.cc/commands
-ECHO %info_h2%Stopping Service `%service_name%`...%ansi_end% 
+ECHO %info_h2%Stopping Service...%ansi_end% 
+ECHO     service name: %service_name%
+
 call %nssm_exe% stop %service_name%
 exit

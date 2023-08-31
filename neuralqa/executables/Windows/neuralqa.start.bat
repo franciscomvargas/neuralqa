@@ -1,6 +1,5 @@
 @ECHO OFF
-
-:: GET ADMIN
+:: GET ADMIN > BEGIN
 net session >NUL 2>NUL
 IF %errorLevel% NEQ 0 (
 	goto UACPrompt
@@ -11,10 +10,11 @@ IF %errorLevel% NEQ 0 (
 ECHO Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
 set params= %*
 ECHO UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
-start /B /WAIT "%temp%\getadmin.vbs"
+cscript "%temp%\getadmin.vbs"
 del "%temp%\getadmin.vbs"
 exit /B
 :gotAdmin
+:: GET ADMIN > END
 
 :: Service VARS
 set service_name=neuralqa_service
@@ -53,7 +53,10 @@ IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%UserProfile%\Desota\Portables\n
 IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win32\nssm.exe
 
 :: Start service - retrieved from https://nssm.cc/commands
-ECHO %info_h2%Starting Service `%service_name%`...%ansi_end% 
+:: Start service - retrieved from https://nssm.cc/commands
+ECHO %info_h2%Starting Service...%ansi_end% 
+ECHO     service name: %service_name%
+
 call %nssm_exe% start %service_name% >NUL
 
 :: Wait for Service to be fully started
@@ -63,7 +66,7 @@ ECHO %info_h2%Waiting for Service handshake...%ansi_end%
 set /p service_res= < %UserProfile%\tmpFile.txt
 del %UserProfile%\tmpFile.txt > NUL 2>NUL
 IF '%service_res%' NEQ '%shake_respose%' (
-    timeout 2 > NUL 2>NUL
+    timeout 1 > NUL 2>NUL
     GOTO waitloop
 )
 
