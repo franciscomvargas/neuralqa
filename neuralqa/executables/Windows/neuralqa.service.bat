@@ -2,6 +2,7 @@
 :mainloop
 
 :: Get Model path
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
 for %%a in ("%~dp0..\..") do set "model_path=%%~fa"
 
 :: Run DeRunner Service

@@ -1,6 +1,8 @@
 @ECHO OFF
-:: - Model Path
-set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa
+:: - User Path
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
+for %%a in ("%~dp0..\..\..\..\..\..") do set "root_path=%%~fa"
+set model_path=%root_path%\Desota\Desota_Models\NeuralQA\neuralqa
 :: Service VARS - retrieved from https://nssm.cc/usage
 set model_name=Desota/NeuralQA
 set service_name=neuralqa_service
@@ -42,18 +44,18 @@ set ansi_end=%ESC%[0m
 :end_ansi_colors
 
 :: NSSM - the Non-Sucking Service Manager 
-IF EXIST %UserProfile%\Desota\Portables\nssm goto endofnssm
+IF EXIST %root_path%\Desota\Portables\nssm goto endofnssm
 ECHO %info_h2%Installing NSSM - the Non-Sucking Service Manager...%ansi_end% 
-call mkdir %UserProfile%\Desota\Portables\nssm >NUL 2>NUL
-call cd %UserProfile%\Desota\Portables\nssm >NUL 2>NUL
-call powershell -command "Invoke-WebRequest -Uri %nssm_installer% -OutFile ~\Desota\Portables\nssm.zip" &&  tar -xzvf %UserProfile%\Desota\Portables\nssm.zip -C %UserProfile%\Desota\Portables\nssm --strip-components 1 && del %UserProfile%\Desota\Portables\nssm.zip
+call mkdir %root_path%\Desota\Portables\nssm >NUL 2>NUL
+call cd %root_path%\Desota\Portables\nssm >NUL 2>NUL
+call powershell -command "Invoke-WebRequest -Uri %nssm_installer% -OutFile %root_path%\Desota\Portables\nssm.zip" &&  tar -xzvf %root_path%\Desota\Portables\nssm.zip -C %root_path%\Desota\Portables\nssm --strip-components 1 && del %root_path%\Desota\Portables\nssm.zip
 :endofnssm
 
 ECHO %info_h2%Creating Service..%ansi_end% 
 ECHO    service name: %service_name%
 :: NSSM - exe path 
-IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win64\nssm.exe
-IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win32\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%root_path%\Desota\Portables\nssm\win64\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%root_path%\Desota\Portables\nssm\win32\nssm.exe
 
 :: Service Install
 call %nssm_exe% install %service_name% %model_exe% %exe_path% >NUL 2>NUL

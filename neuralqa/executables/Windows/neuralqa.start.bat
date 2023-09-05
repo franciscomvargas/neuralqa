@@ -21,6 +21,9 @@ set service_name=neuralqa_service
 :: Service waiter - Confirm Service is ready for requests
 set service_waiter=curl localhost:8888/api/handshake
 set shake_respose={"status":"ready"}
+:: - User Path
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
+for %%a in ("%~dp0..\..\..\..\..\..") do set "root_path=%%~fa"
 
 
 
@@ -49,8 +52,8 @@ set ansi_end=%ESC%[0m
 :end_ansi_colors
 
 :: NSSM - exe path 
-IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win64\nssm.exe
-IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win32\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%root_path%\Desota\Portables\nssm\win64\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%root_path%\Desota\Portables\nssm\win32\nssm.exe
 
 :: Start service - retrieved from https://nssm.cc/commands
 :: Start service - retrieved from https://nssm.cc/commands
@@ -62,9 +65,9 @@ call %nssm_exe% start %service_name% >NUL
 :: Wait for Service to be fully started
 ECHO %info_h2%Waiting for Service handshake...%ansi_end% 
 :waitloop
-%service_waiter% > %UserProfile%\tmpFile.txt
-set /p service_res= < %UserProfile%\tmpFile.txt
-del %UserProfile%\tmpFile.txt > NUL 2>NUL
+%service_waiter% > %root_path%\tmpFile.txt
+set /p service_res= < %root_path%\tmpFile.txt
+del %root_path%\tmpFile.txt > NUL 2>NUL
 IF '%service_res%' NEQ '%shake_respose%' (
     timeout 1 > NUL 2>NUL
     GOTO waitloop

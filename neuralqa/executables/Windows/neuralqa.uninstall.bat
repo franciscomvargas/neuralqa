@@ -1,9 +1,12 @@
 @ECHO OFF
 :: Uninstalation VARS
+:: - User Path
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
+for %%a in ("%~dp0..\..\..\..\..\..") do set "root_path=%%~fa"
 :: - Model Path
-set model_path=%UserProfile%\Desota\Desota_Models\NeuralQA
+set model_path=%root_path%\Desota\Desota_Models\NeuralQA
 set service_name=neuralqa_service
-set nssm_path=%UserProfile%\Desota\Portables\nssm
+set nssm_path=%root_path%\Desota\Portables\nssm
 set model_name=Desota/NeuralQA
 set uninstaller_header=NeuralQA Uninstaller - Sad to say goodbye ):
 

@@ -18,7 +18,9 @@ exit /B
 
 :: Service VARS
 set service_name=neuralqa_service
-
+:: - User Path
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
+for %%a in ("%~dp0..\..\..\..\..\..") do set "root_path=%%~fa"
 
 
 :: -- Edit bellow if you're felling lucky ;) -- https://youtu.be/5NV6Rdv1a3I
@@ -46,8 +48,8 @@ set ansi_end=%ESC%[0m
 :end_ansi_colors
 
 :: NSSM - exe path 
-IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win64\nssm.exe
-IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%UserProfile%\Desota\Portables\nssm\win32\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%root_path%\Desota\Portables\nssm\win64\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%root_path%\Desota\Portables\nssm\win32\nssm.exe
 
 :: Stop service - retrieved from https://nssm.cc/commands
 ECHO %info_h2%Stopping Service...%ansi_end% 
