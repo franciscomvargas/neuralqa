@@ -9,6 +9,18 @@ API_UP = "http://129.152.27.36/assistant/api_uploads"
 
 # QUESTION-ANSWER MODEL
 def parse_text(desota_arg):
+    # TEMPORARY FIX
+    # retrieved from https://stackoverflow.com/a/3642850 & https://stackoverflow.com/a/32680048
+    _file_pattern = re.compile(r'file\(((.)*)\)')
+    _file_res = _file_pattern.search(desota_arg)
+    if _file_res:
+        desota_arg = _file_res.group(1)
+    _text_pattern = re.compile(r'text\(((.)*)\)')
+    _text_res = _text_pattern.search(desota_arg)
+    if _text_res:
+        desota_arg = _text_res.group(1)
+
+
     if desota_arg.endswith(".txt"):
         download_desota_url = f'{API_UP}/{desota_arg}'
         base_filename = os.path.basename(desota_arg)
@@ -39,13 +51,14 @@ def parse_text(desota_arg):
         return desota_arg
     
 def get_request_qa(model_request_dict):
-    _question, _context = None, None
-    if "quesion" in model_request_dict["input_args"]:
-        _question = parse_text(model_request_dict["input_args"]["quesion"])
+    _context, _question = None, None
     if "context" in model_request_dict["input_args"]:
         _context = parse_text(model_request_dict["input_args"]["context"])
+    if "question" in model_request_dict["input_args"]:
+        _question = parse_text(model_request_dict["input_args"]["question"])
 
-    return _question, _context
+    return _context, _question
+
 
 # URL MODEL
 def get_url_from_str(string):

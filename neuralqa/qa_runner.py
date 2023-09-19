@@ -69,15 +69,20 @@ def main(args):
     out_filepath = os.path.join(dir_path, f"question-answer{start_time}.txt")
     
     # Get url from request
-    _context, _questions = get_request_qa(model_request_dict)
+    _context, _question = get_request_qa(model_request_dict)
                 
     # Input Error - ret 1
-    if not (_context and _questions):
-        print(f"[ ERROR ] -> NeuralQA Request Failed: No HTML | ULR found")
+    if not (_context and _question):
+        print(f"[ ERROR ] -> NeuralQA Request Failed:\nContext: {_context}\nQuestion: {_question}")
         exit(1)
 
     qa_res = []
-    for count, question in enumerate(_questions):
+    if isinstance(_question, str):
+        _question = [_question]
+    if not isinstance(_question, list):
+        print(f"[ ERROR ] -> NeuralQA Request Failed:\nQuestion could not be parsed into list!\nQuestion: {_question}")
+        exit(1)
+    for count, question in enumerate(_question):
         # NeuralQA Request Preparation
         payload = {
             "max_documents": 5,
@@ -115,21 +120,29 @@ def main(args):
 
     print(f"[ INFO ] -> NeuralQA Response:{json.dumps(qa_res, indent=2)}")
     
-    # # DeSOTA API Response Preparation
-    # with open(out_filepath, 'w', encoding="utf-8") as fw:
-    #     fw.write(descraper_res["html_text"] if "html_text" in descraper_res else json.dumps(descraper_res))
-    # files = []
-    # with open(out_filepath, 'rb') as fr:
-    #     files.append(('upload[]', fr))
-    #     # DeSOTA API Response Post
-    #     send_task = requests.post(url = send_task_url, files=files)
-    #     print(f"[ INFO ] -> DeSOTA API Upload:{json.dumps(send_task.json(), indent=2)}")
-    # # Delete temporary file
-    # os.remove(out_filepath)
+    # DeSOTA API Response Preparation
+    with open(out_filepath, 'w', encoding="utf-8") as fw:
+        _out_format = []
+        for _qa_arg in qa_res:
+            if "answers" in _qa_arg:
+                _out_format.append(json.dumps(_qa_arg["answers"]))
+    
+    
+        _out_format.append(json.dumps({"error": f"Model NeuralQA couldn't find any answer for question `{_question}`"}))
+        fw.writelines(_out_format)
+    
+    files = []
+    with open(out_filepath, 'rb') as fr:
+        files.append(('upload[]', fr))
+        # DeSOTA API Response Post
+        send_task = requests.post(url = send_task_url, files=files)
+        print(f"[ INFO ] -> DeSOTA API Upload:{json.dumps(send_task.json(), indent=2)}")
+    # Delete temporary file
+    os.remove(out_filepath)
 
-    # if send_task.status_code != 200:
-    #     print(f"[ ERROR ] -> Descraper Post Failed (Info):\nfiles: {files}\nResponse Code: {send_task.status_code}")
-    #     exit(3)
+    if send_task.status_code != 200:
+        print(f"[ ERROR ] -> Descraper Post Failed (Info):\nfiles: {files}\nResponse Code: {send_task.status_code}")
+        exit(3)
     
     print("TASK OK!")
     exit(0)
