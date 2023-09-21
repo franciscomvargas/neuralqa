@@ -1,4 +1,5 @@
-# Instalation
+<details open>
+    <summary><h1>Instalation</h1></summary>
 
 <details open>
     <summary><h2>Use DeSOTA official <a href="https://github.com/DeSOTAai/DeManagerTools/">Manager Tools</a></h2></summary>
@@ -61,8 +62,11 @@
     
     
 </details>
+</details>
 
-# Service Operations
+<details open>
+    <summary><h1>Service Operations</h1></summary>
+
 <details open>
     <summary><h2>Windows</h2></summary>
 
@@ -84,8 +88,10 @@
 
     ```
 </details>
+</details>
 
-# Uninstalation
+<details open>
+    <summary><h1>Uninstalation</h1></summary>
 
 ## Use DeSOTA official [Manager Tools](https://github.com/DeSOTAai/DeManagerTools/)
 
@@ -114,9 +120,13 @@
       ```
       
 </details>
+</details>
 
-# Credits / Lincense
+<details open>
+    <summary><h1>Credits / Lincense</h1></summary>
+
 ## Citation
+
 ```
 @article{dibia2020neuralqa,
     title={NeuralQA: A Usable Library for Question Answering (Contextual Query Expansion + BERT) on Large Datasets},
@@ -128,3 +138,5 @@
 
 ## Licence
 [MIT](https://github.com/victordibia/neuralqa/blob/master/LICENSE)
+
+</details>
