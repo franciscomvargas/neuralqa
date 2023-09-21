@@ -183,7 +183,7 @@ call %user_path%\Desota\Portables\miniconda3\condabin\conda activate ./env >NUL 
 :: COMMANDS WITH MINICONDA ENV ACTIVATED
 :: - Install required Libraries
 ECHO %info_h1%Step 6/7 - Install Project Packages%ansi_end%
-call %user_path%\Desota\Portables\miniconda3\condabin\conda install pip -y
+call %user_path%\Desota\Portables\miniconda3\condabin\conda install pip -y >NUL 2>NUL
 call pip install -r %install_model_path%\requirements.txt >NUL 2>NUL
 
 :: MINICONDA ENV DEACTIVATE
