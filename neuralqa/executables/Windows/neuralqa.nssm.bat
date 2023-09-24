@@ -66,7 +66,11 @@ call %nssm_exe% set %service_name% AppParameters server >NUL 2>NUL
 :: Details tab
 call %nssm_exe% set %service_name% DisplayName %model_name% >NUL 2>NUL
 call %nssm_exe% set %service_name% Description %model_desc% >NUL 2>NUL
-call %nssm_exe% set %service_name% Start SERVICE_AUTO_START >NUL 2>NUL
+:: START retrieved from https://gist.github.com/mh-cbon/bd0c860d42db33508d817e12fb540cdb
+:: AUTO
+::call %nssm_exe% set %service_name% Start SERVICE_AUTO_START >NUL 2>NUL
+:: MANUAL
+call %nssm_exe% set %service_name% Start SERVICE_DEMAND_START >NUL 2>NUL
 :: Log on tab
 call %nssm_exe% set %service_name% ObjectName LocalSystem >NUL 2>NUL
 call %nssm_exe% set %service_name% Type SERVICE_WIN32_OWN_PROCESS >NUL 2>NUL
