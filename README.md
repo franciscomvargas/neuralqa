@@ -1,4 +1,11 @@
 <details open>
+    <summary><h1>About <a href="https://github.com/victordibia/neuralqa">NeuralQA</a></h1></summary>
+
+[![UI Teaser](https://raw.githubusercontent.com/victordibia/neuralqa/master/docs/images/manual.jpg)](https://github.com/victordibia/neuralqa/blob/master/README.md)
+
+</details>
+
+<details open>
     <summary><h1>Instalation</h1></summary>
 
 <details open>
