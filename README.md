@@ -8,19 +8,11 @@
 <details open>
     <summary><h1>Instalation</h1></summary>
 
-<details open>
-    <summary><h2>Use DeSOTA official <a href="https://github.com/DeSOTAai/DeManagerTools/">Manager Tools</a></h2></summary>
+## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#instalation)
 
-[![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/DeSOTAai/DeManagerTools/blob/main/executables/Windows/demanagertools.install.bat)
+[![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://desota.net/assistant/download.php?file=demanagertools&system=win)
 
-<!-- TODO: Convert desota host into HTTPS -->
-<!-- [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](http://129.152.27.36/assistant/download.php?system=win&file=demanagertools) -->
-
-1. Uncompress File
-2. Run .BAT file
-
-</details>
-<details open>
+<details>
     <summary><h2>Manual Windows Instalation</h2></summary>
 
 * Go to CMD as Administrator (command prompt):
@@ -100,9 +92,9 @@
 <details open>
     <summary><h1>Uninstalation</h1></summary>
 
-## Use DeSOTA official [Manager Tools](https://github.com/DeSOTAai/DeManagerTools/)
+## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#models--tools-dashboard)
 
-<details open>
+<details>
     <summary><h2>Manual Windows Uninstalation</h2></summary>
 
 * Go to CMD (command prompt):
