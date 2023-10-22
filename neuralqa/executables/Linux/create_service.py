@@ -6,7 +6,9 @@ parser.add_argument("-uh", "--user_home",
     type=str)
 args = parser.parse_args()
 
-# EDIT BELLOW v
+
+
+
 USER_PATH=None
 if args.user_home:
     if os.path.isdir(args.user_home):
@@ -14,22 +16,31 @@ if args.user_home:
 if not USER_PATH:
     USER_PATH = os.path.expanduser('~')
 
+
+
+# -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe: miniconda + pip pckgs + systemctl service
+
 CURR_PATH = os.path.dirname(os.path.realpath(__file__))
+
 TARGET_RUN_FILE = os.path.join(CURR_PATH, "neuralqa.service.bash")
 TARGET_SERV_FILE = os.path.join(CURR_PATH, "neuralqa.service")
 
 MODEL_PATH=os.path.join(USER_PATH, "Desota", "Desota_Models", "NeuralQA", "neuralqa")
+MODEL_ENV=os.path.join(MODEL_PATH, "env")
 SERV_DESC="Desota/NeuralQA - A Usable Library for Question Answering on Large Datasets"
 SERV_PORT=8888
 SERV_RUN_CMD=f"/bin/bash {TARGET_RUN_FILE}"
-# EDIT ABOVE ^
+
+
+
+# -- Edit bellow if you're felling lucky ;) -- https://youtu.be/5NV6Rdv1a3I
 
 # SERVICE RUNNER
 TEMPLATE_SERVICE_RUNNER=f'''#!/bin/bash
 # GET USER PATH
 while true
 do
-    {MODEL_PATH}/bin/python3 {MODEL_PATH}/cli.py ui --host 127.0.0.1 --port {SERV_PORT}
+    {MODEL_ENV}/bin/python3 {MODEL_PATH}/cli.py ui --host 127.0.0.1 --port {SERV_PORT}
 done
 # Inform Crawl Finish
 echo Service as Terminated !'''
