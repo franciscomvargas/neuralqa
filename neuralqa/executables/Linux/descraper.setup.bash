@@ -5,6 +5,9 @@ get_user=$(who)
 USER=${get_user%% *}
 USER_HOME="/home/$USER"
 
+
+# -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe: miniconda + pip pckgs + systemctl service
+
 # SETUP VARS
 MODEL_NAME=NeuralQA
 # - Model Release
@@ -12,9 +15,11 @@ MODEL_RELEASE=https://github.com/franciscomvargas/neuralqa/archive/refs/tags/v0.
 # - Model Path
 #   $PWD = \home\[username]\Desota\Desota_Models\DeUrlCruncher\executables\Linux
 MODEL_PATH=$USER_HOME/Desota/Desota_Models/$MODEL_NAME
-PIP_REQS=$MODEL_PATH/requirements.txt
 RUN_PATH=$MODEL_PATH/neuralqa
-# - Create Service Script
+# Conda Instalation
+MODEL_ENV=$RUN_PATH/env
+PIP_REQS=$MODEL_PATH/requirements.txt
+# - Create Service Script - Files generated in create_service.py
 EXECS_PATH=$RUN_PATH/executables/Linux
 CREATE_SERV=$EXECS_PATH/create_service.py
 SERV_NAME=neuralqa.service
@@ -86,7 +91,7 @@ if ( test -d "$RUN_PATH" );
 then
     cd $RUN_PATH
     echo
-    echo "Step 1/3 - Move (cd) to Project Path:"
+    echo "Step 1/4 - Move (cd) to Project Path:"
     echo "    $PWD"
 else
     echo "Error:"
@@ -102,7 +107,7 @@ fi
 echo
 
 
-echo "Step 2/3 - Install Miniconda for Project"
+echo "Step 2/4 - Install Miniconda for Project"
 # Install Conda if Required - https://developers.google.com/earth-engine/guides/python_install-conda#linux
 # Miniconda Instalation Status
 CONDA_BASE=$USER_HOME/Desota/Portables/miniconda3
@@ -143,41 +148,44 @@ fi
 echo "Creating MiniConda Environment..."
 if [ "$debug" -eq "1" ]; 
 then
-    conda create --prefix $RUN_PATH/env -y
-    conda activate $RUN_PATH/env
+    conda create --prefix $MODEL_ENV -y
+    conda activate $MODEL_ENV
 else
-    conda create --prefix $RUN_PATH/env -y&> /dev/null
-    conda activate $RUN_PATH/env&> /dev/null
+    conda create --prefix $MODEL_ENV -y&> /dev/null
+    conda activate $MODEL_ENV&> /dev/null
 fi
 echo "    $CONDA_PREFIX"
 
 
 # Install required Libraries
 echo
-echo "Step 3/3 - Install Project Packages"
+echo "Step 3/4 - Install Project Packages"
+export TMPDIR='/var/tmp'
 if [ "$debug" -eq "1" ]; 
 then
     conda install pip -y
-    pip install -r $PIP_REQS
+    pip install -r $PIP_REQS --compile --no-cache-dir 2>/dev/null
 fi
 if [ "$debug" -ne "1" ]; 
 then
     conda install pip -y &> /dev/null
-    pip install -r $PIP_REQS &> /dev/null
+    pip install -r $PIP_REQS --compile --no-cache-dir &> /dev/null
     echo
     echo 'Packages Installed:'
     pip freeze
 fi
-
+# Delete pip tmp files
+rm -rf /var/tmp/pip-*
 # Deactivate CONDA
 conda deactivate
-chown -R $USER $RUN_PATH/env
+chown -R $USER $MODEL_ENV
 
 # Create Service
 echo
 echo "Step 4/4 - Create Systemctl Service"
 # Create User Service Files
-$RUN_PATH/env/bin/python3 $CREATE_SERV --user_home $USER_HOME
+$MODEL_ENV/bin/python3 $CREATE_SERV --user_home $USER_HOME
+chown -R $USER $MODEL_ENV
 # Append Service to systemctl
 cp $SERV_PATH /lib/systemd/system
 systemctl daemon-reload
@@ -193,3 +201,4 @@ fi
 echo
 echo 'Setup Completed!'
 exit
+    
