@@ -1,4 +1,5 @@
 @ECHO OFF
+
 :: GET ADMIN > BEGIN
 net session >NUL 2>NUL
 IF %errorLevel% NEQ 0 (
@@ -16,14 +17,23 @@ exit /B
 :gotAdmin
 :: GET ADMIN > END
 
+
+
+:: -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe (LocalhostAsService - Model): miniconda + pip pckgs + NSSM
+
+:: USER PATH
+:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
+for %%a in ("%~dp0..\..\..\..\..\..") do set "user_path=%%~fa"
+
 :: Service VARS
 set service_name=neuralqa_service
+
 :: Service waiter - Confirm Service is ready for requests
 set service_waiter=curl localhost:8888/api/handshake
 set shake_respose={"status":"ready"}
-:: - User Path
-:: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
-for %%a in ("%~dp0..\..\..\..\..\..") do set "root_path=%%~fa"
+
+:: NSSM VARS
+set nssm_path=%user_path%\Desota\Portables\nssm
 
 
 
@@ -52,10 +62,9 @@ set ansi_end=%ESC%[0m
 :end_ansi_colors
 
 :: NSSM - exe path 
-IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%root_path%\Desota\Portables\nssm\win64\nssm.exe
-IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%root_path%\Desota\Portables\nssm\win32\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==AMD64 set nssm_exe=%nssm_path%\win64\nssm.exe
+IF %PROCESSOR_ARCHITECTURE%==x86 set nssm_exe=%nssm_path%\win32\nssm.exe
 
-:: Start service - retrieved from https://nssm.cc/commands
 :: Start service - retrieved from https://nssm.cc/commands
 ECHO %info_h2%Starting Service...%ansi_end% 
 ECHO     service name: %service_name%
@@ -64,10 +73,13 @@ call %nssm_exe% start %service_name% >NUL
 
 :: Wait for Service to be fully started
 ECHO %info_h2%Waiting for Service handshake...%ansi_end% 
+set /a x=0
 :waitloop
-%service_waiter% > %root_path%\tmpFile.txt
-set /p service_res= < %root_path%\tmpFile.txt
-del %root_path%\tmpFile.txt > NUL 2>NUL
+ECHO       Curl Counter: %x%
+set /a x+=1
+%service_waiter% > %user_path%\tmpFile.txt 2>NUL
+set /p service_res= < %user_path%\tmpFile.txt
+del %user_path%\tmpFile.txt >NUL 2>NUL
 IF '%service_res%' NEQ '%shake_respose%' (
     timeout 1 > NUL 2>NUL
     GOTO waitloop

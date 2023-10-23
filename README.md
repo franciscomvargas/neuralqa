@@ -8,123 +8,288 @@
 <details open>
     <summary><h1>Instalation</h1></summary>
 
-## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#instalation)
+## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#readme)
 
+<<<<<<< HEAD
+1. Choose Platform:
+
+    [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://github.com/DeSOTAai/DeManagerTools/releases/download/v0.0.2/dmt_installer-v0.0.2-win64.zip)
+    
+    <!-- [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=linux)](https://github.com/DeSOTAai/DeManagerTools#instalation) -->
+  
+2. **Open** [`Models Instalation`](https://github.com/DeSOTAai/DeManagerTools/#install--upgrade-desota-models-and-tools) tab
+
+3. **Select** the Available Tool `franciscomvargas/neuralqa`
+
+4. **Press** `Start Instalation`
+=======
 [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://github.com/DeSOTAai/DeManagerTools/releases/download/v0.0.2/dmt_installer-v0.0.2-win64.zip)
 
 <!--
 TODO
 [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://desota.net/assistant/download.php?file=demanagertools&system=win)
 -->
+>>>>>>> 84c425605c03d1c3faa44bb3932e639bbd9e3801
 
 <details>
     <summary><h2>Manual Windows Instalation</h2></summary>
 
 * Go to CMD as Administrator (command prompt):
-    * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
-    * Search: `cmd` 
-    * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
+  * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
+  * Enter: `cmd` 
+  * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
-* Copy-Paste the following comands: 
-    ```cmd
-    powershell -command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/franciscomvargas/neuralqa/master/neuralqa/executables/Windows/neuralqa.install.bat -OutFile ~\neuralqa_installer.bat"
-    %UserProfile%\neuralqa_installer.bat && del %UserProfile%\neuralqa_installer.bat
+### Download:
 
-    ```
-    * Installer Optional `Arguments`
+1. Create Model Folder:
+```cmd
+rmdir /S /Q %UserProfile%\Desota\Desota_Models\NeuralQA
+mkdir %UserProfile%\Desota\Desota_Models\NeuralQA
 
-        <table>
-            <thead>
-                <tr>
-                    <th>arg</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan=3>/reinstall</td>
-                    <td>Overwrite project when re-installing</td>
-                </tr>
-                <tr>
-                    <td>Delete project service when re-installing</td>
-                </tr>
-                <tr>
-                    <td>Install without requiring user interaction</td>
-                </tr>
-                <tr>
-                    <td>/startmodel</td>
-                    <td>Start project service on instalation</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        ```cmd
-        powershell -command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/franciscomvargas/neuralqa/master/neuralqa/executables/Windows/neuralqa.install.bat -OutFile ~\neuralqa_installer.bat"
-        %UserProfile%\neuralqa_installer.bat /reinstall /startmodel && del %UserProfile%\neuralqa_installer.bat
+```
 
-        ```
+2. Download Last Release:
+```cmd
+powershell -command "Invoke-WebRequest -Uri https://github.com/franciscomvargas/neuralqa/archive/refs/tags/v0.0.0.zip -OutFile %UserProfile%\NeuralQA_release.zip" 
+
+```
+
+3. Uncompress Release:
+```cmd
+tar -xzvf %UserProfile%\NeuralQA_release.zip -C %UserProfile%\Desota\Desota_Models\NeuralQA --strip-components 1 
+
+```
+
+4. Delete Compressed Release:
+```cmd
+del %UserProfile%\NeuralQA_release.zip
+
+```
+
+### Setup:
+
+5. Setup:
+```cmd
+%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.setup.bat
+
+```
+
+*  Optional Arguments:
+    <table>
+        <thead>
+            <tr>
+                <th>arg</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>/debug</td>
+                <td>Log everything (useful for debug)</td>
+                <td><code>%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.setup.bat /debug</code></td>
+            </tr>
+            <tr>
+                <td>/manualstart</td>
+                <td>Don't start at end of setup</td>
+                <td><code>%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.setup.bat /manualstart</code></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</details>
+
+
+
+<details>
+    <summary><h2>Manual Linux Instalation</h2></summary>
+
+* Go to Terminal:
+    * <kbd> Ctrl </kbd> + <kbd> Alt </kbd> + <kbd>T</kbd>
+
+### Download:
+
+1. Create Model Folder:
+```cmd
+rm -rf ~/Desota/Desota_Models/NeuralQA
+mkdir -p ~/Desota/Desota_Models/NeuralQA
+
+```
+
+2. Download Last Release:
+```cmd
+wget https://github.com/franciscomvargas/neuralqa/archive/refs/tags/v0.0.0.zip -O ~/NeuralQA_release.zip
+
+```
+
+3. Uncompress Release:
+```cmd
+sudo apt install libarchive-tools -y && bsdtar -xzvf ~/NeuralQA_release.zip -C ~/Desota/Desota_Models/NeuralQA --strip-components=1
+
+```
+
+4. Delete Compressed Release:
+```cmd
+rm -rf ~/NeuralQA_release.zip
+
+```
+
+### Setup:
+
+5. Setup:
+```cmd
+sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.setup.bash
+
+```
+
+*  Optional Arguments:
+    <table>
+        <thead>
+            <tr>
+                <th>arg</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>-d</td>
+                <td>Setup with debug Echo ON</td>
+                <td><code>sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.setup.bash -d</code></td>
+            </tr>
+            <tr>
+                <td>-m</td>
+                <td>Don't start service at end of setup</td>
+                <td><code>sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.setup.bash -m</code></td>
+            </tr>
+        </tbody>
+    </table>
     
     
 </details>
 </details>
+
+
+
+
+
+
 
 <details open>
     <summary><h1>Service Operations</h1></summary>
 
-<details open>
+<details>
     <summary><h2>Windows</h2></summary>
 
-* Go to CMD (command prompt):
+* Go to CMD as Administrator (command prompt):
   * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
-  * Search: `cmd` 
+  * Enter: `cmd` 
   * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
 ### Start Service
-* Copy-Paste the following comands: 
     ```cmd
     %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.start.bat
 
     ```
 ### Stop Service
-* Copy-Paste the following comands: 
     ```cmd
     %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.stop.bat
 
     ```
+
+### Status Service
+    ```cmd
+    %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.status.bat
+
+    ```
+</details>
+
+
+<details>
+    <summary><h2>Linux</h2></summary>
+
+* Go to Terminal:
+    * <kbd> Ctrl </kbd> + <kbd> Alt </kbd> + <kbd>T</kbd>
+
+### Start Service
+    ```cmd
+    sudo systemctl start neuralqa.service
+    ```
+    
+### Stop Service
+    ```cmd
+    sudo systemctl stop neuralqa.service
+
+    ```
+
+### Status Service
+    ```cmd
+    systemctl status neuralqa.service
+
+    ```
 </details>
 </details>
+
+
+
 
 <details open>
     <summary><h1>Uninstalation</h1></summary>
 
-## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#models--tools-dashboard)
+## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#readme)
+
+1. **Open** [`Models Dashboard`](https://github.com/DeSOTAai/DeManagerTools/#models--tools-dashboard) tab
+
+2. **Select** the model `franciscomvargas/neuralqa`
+
+3. **Press** `Uninstall`
 
 <details>
     <summary><h2>Manual Windows Uninstalation</h2></summary>
 
-* Go to CMD (command prompt):
+* Go to CMD as Administrator (command prompt):
   * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
-  * Search: `cmd` 
+  * Enter: `cmd` 
   * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
 
-* Copy-Paste the following comands: 
-    ```cmd
-    %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat
+```cmd
+%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat
 
-    ```
-    * Uninstaller Optional `Arguments`
+```
 
-      |arg|Description|
-      |---|---|
-      |/Q|Uninstall without requiring user interaction|
+* Optional `Arguments`
 
-      ```cmd
-      %UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat /Q
+    |arg|Description|Example
+    |---|---|---|
+    |/Q|Uninstall without requiring user interaction|`%UserProfile%\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows\neuralqa.uninstall.bat /Q`
+      
+</details>
 
-      ```
+
+
+<details>
+    <summary><h2>Manual Linux Uninstalation</h2></summary>
+
+* Go to Terminal:
+    * <kbd> Ctrl </kbd> + <kbd> Alt </kbd> + <kbd>T</kbd>
+
+```cmd
+sudo bash ~/Desota/Desota_Models/DeScraper/executables/Linux/descraper.uninstall.bash
+
+```
+
+* Optional `Arguments`
+
+    |arg|Description|Example
+    |---|---|---|
+    |-q|Uninstall without requiring user interaction|`sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.uninstall.bash -q`
       
 </details>
 </details>
+
+
+
+
 
 <details open>
     <summary><h1>Credits / Lincense</h1></summary>
