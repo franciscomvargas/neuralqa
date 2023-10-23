@@ -76,7 +76,7 @@
 ## **Project comands**
 
 ### REQUIRED APT INSTALLS
-apt install openssl
+sudo apt install libarchive-tools -y
 
 ### SETUP:
 ```
