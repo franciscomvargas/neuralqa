@@ -25,10 +25,10 @@
 <details>
     <summary><h2>Manual Windows Instalation</h2></summary>
 
-* Go to CMD as Administrator (command prompt):
+* Go to CMD (command prompt):
   * <kbd>⊞ Win</kbd> + <kbd>R</kbd>
   * Enter: `cmd` 
-  * <kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↵ Enter</kbd>
+  * <kbd>↵ Enter</kbd>
 
 ### Download:
 
