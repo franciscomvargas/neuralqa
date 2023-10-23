@@ -18,11 +18,8 @@ if not USER_PATH:
 
 
 
-<<<<<<< HEAD
+
 # -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe (LocalhostAsService - Model): miniconda + pip pckgs + NSSM
-=======
-# -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe: miniconda + pip pckgs + systemctl service
->>>>>>> 84c425605c03d1c3faa44bb3932e639bbd9e3801
 
 CURR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -34,10 +31,7 @@ MODEL_ENV=os.path.join(MODEL_PATH, "env")
 SERV_DESC="Desota/NeuralQA - A Usable Library for Question Answering on Large Datasets"
 SERV_PORT=8888
 SERV_RUN_CMD=f"/bin/bash {TARGET_RUN_FILE}"
-<<<<<<< HEAD
 PYTHON_MAIN_CMD=f"{MODEL_ENV}/bin/python3 {MODEL_PATH}/cli.py ui --host 127.0.0.1 --port {SERV_PORT}"
-=======
->>>>>>> 84c425605c03d1c3faa44bb3932e639bbd9e3801
 
 
 
@@ -48,11 +42,7 @@ TEMPLATE_SERVICE_RUNNER=f'''#!/bin/bash
 # GET USER PATH
 while true
 do
-<<<<<<< HEAD
     {PYTHON_MAIN_CMD}
-=======
-    {MODEL_ENV}/bin/python3 {MODEL_PATH}/cli.py ui --host 127.0.0.1 --port {SERV_PORT}
->>>>>>> 84c425605c03d1c3faa44bb3932e639bbd9e3801
 done
 # Inform Crawl Finish
 echo Service as Terminated !'''

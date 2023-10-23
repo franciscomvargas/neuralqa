@@ -10,7 +10,6 @@
 
 ## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#readme)
 
-<<<<<<< HEAD
 1. Choose Platform:
 
     [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://github.com/DeSOTAai/DeManagerTools/releases/download/v0.0.2/dmt_installer-v0.0.2-win64.zip)
@@ -22,14 +21,6 @@
 3. **Select** the Available Tool `franciscomvargas/neuralqa`
 
 4. **Press** `Start Instalation`
-=======
-[![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://github.com/DeSOTAai/DeManagerTools/releases/download/v0.0.2/dmt_installer-v0.0.2-win64.zip)
-
-<!--
-TODO
-[![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://desota.net/assistant/download.php?file=demanagertools&system=win)
--->
->>>>>>> 84c425605c03d1c3faa44bb3932e639bbd9e3801
 
 <details>
     <summary><h2>Manual Windows Instalation</h2></summary>
