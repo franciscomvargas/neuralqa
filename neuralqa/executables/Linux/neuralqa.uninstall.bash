@@ -139,6 +139,8 @@ if ( test -d "$MODEL_PATH" ); then
     echo ">DEV TIP< Delete this folder:"
     echo "    $MODEL_PATH"
 else
+    echo
+    echo
     echo 'Uninstalation Completed!'
 fi
 
