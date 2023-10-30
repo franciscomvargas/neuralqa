@@ -14,18 +14,21 @@ MODEL_NAME=NeuralQA
 MODEL_RELEASE=https://github.com/franciscomvargas/neuralqa/archive/refs/tags/v0.0.0.zip
 # - Model Path
 #   $PWD = \home\[username]\Desota\Desota_Models\DeUrlCruncher\executables\Linux
-MODEL_PATH=$USER_HOME/Desota/Desota_Models/$MODEL_NAME
-RUN_PATH=$MODEL_PATH/neuralqa
+ROOT_PATH=$USER_HOME/Desota/Desota_Models/$MODEL_NAME
+MODEL_PATH=$ROOT_PATH/neuralqa
+
 # Conda Instalation
-MODEL_ENV=$RUN_PATH/env
-PIP_REQS=$MODEL_PATH/requirements.txt
+MODEL_ENV=$MODEL_PATH/env
+PIP_REQS=$ROOT_PATH/requirements.txt
+
 # - Create Service Script - Files generated in create_service.py
-EXECS_PATH=$RUN_PATH/executables/Linux
+EXECS_PATH=$MODEL_PATH/executables/Linux
 CREATE_SERV=$EXECS_PATH/create_service.py
 SERV_NAME=neuralqa.service
 SERV_PORT=8888
 SERV_PATH=$EXECS_PATH/$SERV_NAME
 
+# Please Review - >>Libraries required<<
 
 
 # -- Edit bellow if you're felling lucky ;) -- https://youtu.be/5NV6Rdv1a3I
@@ -41,6 +44,13 @@ SERV_PATH=$EXECS_PATH/$SERV_NAME
     echo "    [] = Optional";
     exit 1;
 }
+
+# >>Libraries required<<
+echo "Step 0/4 - Check Required apt instalations"
+echo "    libarchive-tools"
+echo "    curl"
+apt install curl -y &>/dev/nul
+apt install libarchive-tools -y &>/dev/nul
 
 # Program Installers
 #   - Miniconda
@@ -87,16 +97,16 @@ echo "    manualstart [-m]: $manualstart"
 echo "    debug [-d]: $debug"
 
 # Move to Project Folder
-if ( test -d "$RUN_PATH" ); 
+if ( test -d "$MODEL_PATH" ); 
 then
-    cd $RUN_PATH
+    cd $MODEL_PATH
     echo
     echo "Step 1/4 - Move (cd) to Project Path:"
     echo "    $PWD"
 else
     echo "Error:"
     echo "# Description: Model not installed correctly"
-    echo "    expected_path = $RUN_PATH"
+    echo "    expected_path = $MODEL_PATH"
     echo "DEV TIP:"
     echo "# Download Release with this command:"
     echo "    TODO\n"
@@ -105,8 +115,6 @@ fi
 
 # Install Conda IF Required
 echo
-
-
 echo "Step 2/4 - Install Miniconda for Project"
 # Install Conda if Required - https://developers.google.com/earth-engine/guides/python_install-conda#linux
 # Miniconda Instalation Status
@@ -200,6 +208,7 @@ fi
 
 echo
 echo
+chown -R $USER $ROOT_PATH
 echo 'Setup Completed!'
 exit
     

@@ -7,15 +7,12 @@ parser.add_argument("-uh", "--user_home",
 args = parser.parse_args()
 
 
-
-
 USER_PATH=None
 if args.user_home:
     if os.path.isdir(args.user_home):
         USER_PATH = args.user_home
 if not USER_PATH:
     USER_PATH = os.path.expanduser('~')
-
 
 
 
