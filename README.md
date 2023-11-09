@@ -10,11 +10,7 @@
 
 ## Use DeSOTA official [Manager & Tools](https://github.com/DeSOTAai/DeManagerTools#readme)
 
-1. Choose Platform:
-
-    [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=windows)](https://github.com/DeSOTAai/DeManagerTools/releases/download/v0.0.2/dmt_installer-v0.0.2-win64.zip)
-    
-    <!-- [![Install DeManagerTools](https://img.shields.io/static/v1?label=Desota%20-%20Manager%20Tools&message=Install&color=blue&logo=linux)](https://github.com/DeSOTAai/DeManagerTools#instalation) -->
+1. [Download Installer for your Platform](https://github.com/DeSOTAai/DeManagerTools#dedicated-installer)
   
 2. **Open** [`Models Instalation`](https://github.com/DeSOTAai/DeManagerTools/#install--upgrade-desota-models-and-tools) tab
 
@@ -204,18 +200,19 @@ sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.se
 
 ### Start Service
     ```cmd
-    sudo systemctl start neuralqa.service
+    sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.start.bash
+
     ```
     
 ### Stop Service
     ```cmd
-    sudo systemctl stop neuralqa.service
+    sudo bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.stop.bash
 
     ```
 
 ### Status Service
     ```cmd
-    systemctl status neuralqa.service
+    bash ~/Desota/Desota_Models/NeuralQA/neuralqa/executables/Linux/neuralqa.status.bash
 
     ```
 </details>
