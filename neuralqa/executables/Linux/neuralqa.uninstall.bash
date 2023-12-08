@@ -11,10 +11,13 @@ USER_HOME="/home/$USER"
 
 # Setup VARS
 MODEL_NAME=NeuralQA
+
 # - Systemctl service
 MODEL_SERVICE=neuralqa.service
+
 # - Model Path
 MODEL_PATH=$USER_HOME/Desota/Desota_Models/$MODEL_NAME
+
 # - Conda Environment
 MODEL_ENV=$MODEL_PATH/neuralqa/env
 CONDA_PATH=$USER_HOME/Desota/Portables/miniconda3/bin/conda

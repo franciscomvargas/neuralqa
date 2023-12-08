@@ -183,7 +183,7 @@ then
     pip freeze
 fi
 # Delete pip tmp files
-rm -rf /var/tmp/pip-*
+rm -rf /var/tmp/pip-*&> /dev/null
 # Deactivate CONDA
 conda deactivate
 chown -R $USER $MODEL_ENV

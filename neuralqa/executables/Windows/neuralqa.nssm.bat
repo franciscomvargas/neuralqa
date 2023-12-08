@@ -18,7 +18,7 @@ exit /B
 :: GET ADMIN > END
 
 :: -- Edit bellow vvvv DeSOTA DEVELOPER EXAMPLe (LocalhostAsService - Model): miniconda + pip pckgs + NSSM
-:: -- START ON DEMAND
+:: -- SERVICE START ON DEMAND
 
 :: USER PATH
 :: %~dp0 = C:\users\[user]\Desota\Desota_Models\NeuralQA\neuralqa\executables\Windows
