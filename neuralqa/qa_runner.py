@@ -10,24 +10,16 @@ parser.add_argument("-mr", "--model_req",
                     help="DeSOTA Request as yaml file path",
                     type=str)
 parser.add_argument("-mru", "--model_res_url",
-                    help="DeSOTA API Result URL. Recognize path instead of url for desota tests", # check how is atribuited the dev_mode variable in main function
+                    help="DeSOTA API Result URL. Recognize path instead of url for desota tests", # check how is atribuited the test_mode variable in main function
                     type=str)
 
 DEBUG = False
 
 # DeSOTA Funcs [START]
-#   > Get User OS
-# inspired inhttps://stackoverflow.com/a/13874620
-def get_platform():
-    _platform = sys.platform
-    _win_res=["win32", "cygwin", "msys"]
-    _lin_res=["linux", "linux2"]
-    _user_sys = "win" if _platform in _win_res else "lin" if _platform in _lin_res else None
-    if not _user_sys:
-        raise EnvironmentError(f"Plataform `{_platform}` can not be parsed to DeSOTA Options: Windows={_win_res}; Linux={_lin_res}")
-    return _user_sys
+#   > Import DeSOTA Scripts
+from desota import detools
 #   > Grab DeSOTA Paths
-USER_SYS=get_platform()
+USER_SYS = detools.get_platform()
 APP_PATH = os.path.dirname(os.path.realpath(__file__))
 #   > USER_PATH
 if USER_SYS == "win":
@@ -40,64 +32,7 @@ elif USER_SYS == "lin":
     desota_idx = [ps.lower() for ps in path_split].index("desota")
     USER=path_split[desota_idx-1]
     USER_PATH = "/".join(path_split[:desota_idx])
-def user_chown(path):
-    '''Remove root previleges for files and folders: Required for Linux'''
-    if USER_SYS == "lin":
-        #CURR_PATH=/home/[USER]/Desota/DeRunner
-        os.system(f"chown -R {USER} {path}")
-    return
 DESOTA_ROOT_PATH = os.path.join(USER_PATH, "Desota")
-
-#   > Import DeSOTA Scripts
-RUNNER_UTILS_DIR = os.path.join(APP_PATH, "runner_utils")
-RUNNER_UTILS_PY = os.path.join(RUNNER_UTILS_DIR, "utils.py")
-DERUNNER_UTILS_PATH = os.path.join(DESOTA_ROOT_PATH, "DeRunner", "Tools", "decode_desota_model_request.py")
-RUNNER_UTILS_URL = "https://raw.githubusercontent.com/DeSOTAai/DeRunner/main/Tools/decode_desota_model_request.py"
-_utils_init = os.path.join(RUNNER_UTILS_DIR, "__init__.py")
-_desota_files = [RUNNER_UTILS_PY, _utils_init]
-_desota_isfiles = [os.path.isfile(p) for p in _desota_files]
-if False in _desota_isfiles:
-    if not os.path.isdir(RUNNER_UTILS_DIR):
-        os.mkdir(RUNNER_UTILS_DIR)
-    if not os.path.isfile(_utils_init):
-        open(_utils_init, 'w').close()
-    if not os.path.isfile(RUNNER_UTILS_PY) and os.path.isfile(DERUNNER_UTILS_PATH):
-        shutil.copyfile(DERUNNER_UTILS_PATH, RUNNER_UTILS_PY)
-    if not os.path.isfile(RUNNER_UTILS_PY):
-        runner_utils_req = requests.get(RUNNER_UTILS_URL)
-        if runner_utils_req.status_code != 200:
-            raise EnvironmentError(f"Unable to create Desota Runner Utils\n  from: {RUNNER_UTILS_URL}\n    to: {RUNNER_UTILS_PY}")
-        with open(RUNNER_UTILS_PY, "w") as ru:
-            ru.write(runner_utils_req.text)
-    user_chown(RUNNER_UTILS_DIR)
-from runner_utils.utils import *
-
-#   > Parse DeSOTA Request
-def get_model_req(req_path):
-    '''
-    {
-        "task_type": None,      # TASK VARS
-        "task_model": None,
-        "task_dep": None,
-        "task_args": None,
-        "task_id": None,
-        "filename": None,       # FILE VARS
-        "file_url": None,
-        "text_prompt": None     # TXT VAR
-    }
-    '''
-    if not os.path.isfile(req_path):
-        exit(1)
-    with open(req_path) as f:
-        return yaml.load(f, Loader=SafeLoader)
-#   > FIND URL WITH REGEX
-def get_url_from_str(string):
-    # retrieved from https://www.geeksforgeeks.org/python-check-url-string/
-    # findall() has been used
-    # with valid conditions for urls in string
-    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-    url = re.findall(regex, string)
-    return [x[0] for x in url]
 # DeSOTA Funcs [END]
 
 def main(args):
@@ -125,7 +60,7 @@ def main(args):
 
 
     # DeSOTA Model Request
-    model_request_dict = get_model_req(args.model_req)
+    model_request_dict = detools.get_model_req(args.model_req)
     
     # API Response URL
     result_id = args.model_res_url
@@ -133,18 +68,19 @@ def main(args):
     # TARGET File Path
     dir_path = os.path.dirname(os.path.realpath(__file__))
     out_filepath = os.path.join(dir_path, f"url-to-text{start_time}.txt")
-    out_urls = get_url_from_str(result_id)
+    out_urls = detools.get_url_from_str(result_id)
     if len(out_urls)==0:
-        dev_mode = True
+        test_mode = True
         report_path = result_id
     else:
-        dev_mode = False
+        test_mode = False
         send_task_url = out_urls[0]
 
     # Get url from request
-    _req_QAs = get_request_qa(model_request_dict)
-    questions, contexts = [], []
-    [(questions.append(q), contexts.append(c)) for q, c in _req_QAs]
+    questions, contexts = detools.get_request_qa(model_request_dict)
+    print(f"[ DEBUG ] -> NeuralQA req: {json.dumps(model_request_dict, indent=4)}")
+    print(f"[ DEBUG ] -> NeuralQA questions: {questions}")
+    print(f"[ DEBUG ] -> NeuralQA contexts: {contexts}")
     _context = "\n".join(contexts)
     # Input Error - ret 1
     if not (_context and questions):
@@ -206,7 +142,7 @@ def main(args):
         fw.writelines(_out_format)
     
     
-    if dev_mode:
+    if test_mode:
         if not report_path.endswith(".json"):
             report_path += ".json"
         with open(report_path, "w") as rw:
@@ -218,8 +154,8 @@ def main(args):
                 rw,
                 indent=2
             )
-        user_chown(report_path)
-        user_chown(out_filepath)
+        detools.user_chown(report_path)
+        detools.user_chown(out_filepath)
         print(f"Path to report:\n\t{report_path}")
     else:
         files = []
@@ -227,7 +163,7 @@ def main(args):
             files.append(('upload[]', fr))
             # DeSOTA API Response Post
             send_task = requests.post(url = send_task_url, files=files)
-            print(f"[ INFO ] -> DeSOTA API Upload:{json.dumps(send_task.json(), indent=2)}")
+            print(f"[ INFO ] -> DeSOTA API Upload Res:{json.dumps(send_task.json(), indent=2)}")
         # Delete temporary file
         os.remove(out_filepath)
 

@@ -9,5 +9,4 @@ spacy
 numpy
 torchvision
 # DeSOTA Pkcgs
-requests
-pyyaml
+desota

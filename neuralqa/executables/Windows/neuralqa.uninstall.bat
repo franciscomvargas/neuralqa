@@ -241,7 +241,7 @@ call %nssm_exe% remove %service_name%
 :: Delete pip pckgs
 ECHO %info_h1%Deleting pip packages%ansi_end%
 call %conda_path% env remove --prefix %model_env% --all --force
-rmdir /S /Q %model_env%>NUL 2>NUL
+rmdir /S %model_env%
 :: Delete Project Folder
 	ECHO %info_h1%Deleting Project Folder%ansi_end%
     IF EXIST %model_path% rmdir /S %model_path%

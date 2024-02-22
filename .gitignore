@@ -6,6 +6,14 @@ config.yaml
 .vscode
 neuralqa/server/test_query.py
 
+# Generated USER Files @franciscomvargas
+url-to-text*.txt
+## Service
+neuralqa.service
+neuralqa.service.bash
+## NSSM TMP Fix
+*.flag
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
